@@ -11,9 +11,11 @@ export const userDataAuth = async (req, res, next) => {
 
   try {
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
+    const demo = req.body.userId
+        console.log(demo)
 
     if (tokenDecode.id) {
-      req.user = { id: tokenDecode.id }; // ✅ Don't use req.body
+      req.body.userId = tokenDecode.id; // ✅ Don't use req.body
       next();
     } else {
       return res.status(401).json({ success: false, message: "API error" });
