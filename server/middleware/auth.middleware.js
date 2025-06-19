@@ -19,7 +19,8 @@ export const userAuth = async (req,res,next)=>{
         
 
         if (tokenDecode.id) {
-            req.userId = tokenDecode.id;
+            req.user = { id: tokenDecode.id };
+
             
         } else{
             return res
