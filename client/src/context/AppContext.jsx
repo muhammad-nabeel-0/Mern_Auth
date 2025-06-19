@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "axios";Add commentMore actions
 import { createContext, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify'
@@ -14,10 +14,7 @@ const AppContext = createContext()
 export const AppContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
-    const backendUrl = window.location.hostname === "localhost"
-        ? "http://localhost:4000"
-        : "https://mernauth-backend.up.railway.app";
-
+    const backendUrl = "http://localhost:4000"
     const [isLogin, setIsLogin] = useState(false)
     const [userData, setUserData] = useState(false)
     const navigate = useNavigate()

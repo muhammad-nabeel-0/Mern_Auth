@@ -1,6 +1,5 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'Add commentMore actions
 export const userDataAuth = async (req, res, next) => {
-  console.log("COOKIE:", req.cookies);
   const { token } = req.cookies;
 
   if (!token) {
@@ -12,8 +11,6 @@ export const userDataAuth = async (req, res, next) => {
 
   try {
     const tokenDecode = jwt.verify(token, process.env.JWT_SECRET);
-    const demo = req.body.userId
-        console.log(demo)
 
     if (tokenDecode.id) {
       req.user = { id: tokenDecode.id }; // ✅ Don't use req.body

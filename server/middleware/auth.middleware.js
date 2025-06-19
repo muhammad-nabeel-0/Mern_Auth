@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'Add commentMore actions
 
 
 export const userAuth = async (req,res,next)=>{
@@ -9,20 +9,17 @@ export const userAuth = async (req,res,next)=>{
         return res
         .status(401)
         .json({
-            success:false,
+            success:true,
             message:"Not Authirzed. Login Again"
         })
     }
 
     try {
         const tokenDecode = jwt.verify(token,process.env.JWT_SECRET)
-
-        const demo = req.body.userId
-        console.log(demo)
         
 
         if (tokenDecode.id) {
-            req.body.userId = tokenDecode.id;
+            req.body.userId = tokenDecode.id
             
         } else{
             return res
@@ -37,4 +34,3 @@ export const userAuth = async (req,res,next)=>{
         .json({success:false,message:error.message})
     }
 }
-

@@ -1,4 +1,4 @@
-import userModel from "../models/user.model.js"
+import userModel from "../models/user.model.js"Add commentMore actions
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { transpoter } from "../config/nodemailer.js"
@@ -32,12 +32,12 @@ const register = async (req,res)=>{
         const user = new userModel({name,email,password:hashPassword});
         await user.save();
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"})
-        res.cookie("token",token,{
+        res.cookie('token',token,{
             httpOnly:true,
-            secure:true,
-            sameSite:"none",
-            maxAge:7 * 24 * 60 * 60 * 1000,
-        });
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === "production",
+            sameSite:process.env.NODE_ENV === "production" ? "none" : "strict"
+        })
         // sending welcome email 
 
         const emailOptions = {
@@ -88,16 +88,13 @@ const login = async (req,res)=>{
         }
 
         const token =   jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"})
-        res.cookie("token",token,{
+        res.cookie('token',token,{
             httpOnly:true,
-            secure:true,
-            sameSite:"none",
-            maxAge:7 * 24 * 60 * 60 * 1000,
-        });
-
-        return res
-        .status(200)
-        .json({success:true})
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === "production",
+            sameSite:process.env.NODE_ENV === "production" ? "none" : "strict"
+        })
+        return res.json({success:true})
         
     } catch (error) {
         return res
