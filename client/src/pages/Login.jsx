@@ -5,7 +5,6 @@ import axios from 'axios'
 import { useAppContext } from '../context/AppContext'
 import { toast } from 'react-toastify'
 
-axios.defaults.withCredentials = true;
 
 const Login = () => {
     const navigate = useNavigate()
@@ -13,56 +12,44 @@ const Login = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [isLoading, setIsLoading] = useState(false);
     const { backendUrl, setIsLogin, getUserData, userData } = useAppContext()
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
-        setIsLoading(true);
-
         try {
-            const endpoint = state === "Sign Up" ? "/api/auth/register" : "/api/auth/login";
-            const payload = state === "Sign Up"
-                ? { name, email, password }
-                : { email, password };
+            let response;
+            if (state === "Sign Up") {
+                response = await axios.post(backendUrl + "/api/auth/register", {
+                    name, email, password
+                }, { withCredentials: true });
+                toast.success("Create account successfully")
+            } else {
+                response = await axios.post(backendUrl + "/api/auth/login", {
+                    email, password
+                }, { withCredentials: true });
+                toast.success("Login successfully")
+            }
 
-            const response = await axios.post(`${backendUrl}${endpoint}`, payload, {
-                withCredentials: true,
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
 
-            if (response.data.success) {
-                toast.success(state === "Sign Up"
-                    ? "Account created successfully!"
-                    : "Logged in successfully!");
+
+            const { data } = response;
+
+            if (data.success) {
 
                 setIsLogin(true);
-                await getUserData(); // Wait for user data to be fetched
+                getUserData()
                 navigate("/");
             } else {
-                toast.error(response.data.message || "Operation failed");
+                toast.error(data.message || "Something went wrong");
             }
+
         } catch (error) {
-            let errorMessage = "An error occurred";
 
-            if (error.response) {
-                // Server responded with error status
-                errorMessage = error.response.data.message ||
-                    error.response.data.error ||
-                    `Server error: ${error.response.status}`;
-            } else if (error.request) {
-                // Request was made but no response received
-                errorMessage = "No response from server";
-            }
-
+            const errorMessage = error.response?.data?.message || "An error occurred";
             toast.error(errorMessage);
-            console.error("Auth error:", error);
-        } finally {
-            setIsLoading(false);
         }
     };
+
     return (
         <div className='flex items-center justify-center min-h-screen px-6 sm:px-0 bg-gradient-to-br from-blue-200 to-purple-400 '>
             <img onClick={() => navigate("/")} src={assets.logo} alt="logo" className='w-28 sm:w-32 absolute left-5 sm:left-20 top-5 cursor-pointer' />
