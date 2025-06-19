@@ -12,7 +12,7 @@ router.route("/logout").post(logout)
 router.route("/send-verify-otp").post(userAuth,sendVerifyOtp)
 router.route("/verify-account").post(userAuth,verifyEmail)
 router.route("/is-auth").get(userDataAuth,isAuthenticated)
-router.route("/reset-password").post(userAuth,resetPassword)
-router.route("/send-reset-otp").post(userAuth,sendResetOtp)
+router.route("/reset-password").post(resetPassword)
+router.route("/send-reset-otp").post(sendResetOtp)
 
 export default router

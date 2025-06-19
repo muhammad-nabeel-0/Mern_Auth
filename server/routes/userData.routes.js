@@ -6,7 +6,7 @@ import { userDataAuth } from "../middleware/user.middleware.js";
 
 const userDataRouter = Router()
 
-userDataRouter.route("/data").get(userAuth,userDataAuth,getUserData)
+userDataRouter.route("/data").get(userDataAuth,getUserData)
 
 export  {
     userDataRouter

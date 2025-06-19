@@ -1,4 +1,4 @@
-import userModel from "../models/user.model.js"Add commentMore actions
+import userModel from "../models/user.model.js"
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { transpoter } from "../config/nodemailer.js"
@@ -257,6 +257,8 @@ const sendResetOtp = async (req,res)=>{
     }
     try {
         const user = await userModel.findOne({email})
+        console.log(user);
+        
         if (!user) {
             return res.status(401).json({
                 success:false,

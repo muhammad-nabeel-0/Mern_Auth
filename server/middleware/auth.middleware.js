@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'Add commentMore actions
+import jwt from 'jsonwebtoken'
 
 
 export const userAuth = async (req,res,next)=>{

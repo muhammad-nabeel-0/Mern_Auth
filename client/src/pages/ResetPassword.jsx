@@ -67,7 +67,6 @@ const ResetPassword = () => {
         try {
             const { data } = await axios.post(backendUrl + "/api/auth/send-reset-otp",
                 { email }, { withCredentials: true })
-            console.log(data);
 
             if (data?.success) {
 
@@ -77,7 +76,7 @@ const ResetPassword = () => {
                 toast.error(data.message || "Something went wrong");
             }
         } catch (error) {
-            toast.error(error.message)
+            toast.error("backend error")
 
         }
 

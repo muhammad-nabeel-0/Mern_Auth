@@ -15,7 +15,7 @@ connectDB();
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: [
+  origin: [ 'http://localhost:5173' ,
     'https://mern-auth-git-main-nabeel-munirs-projects.vercel.app'], // update this
   credentials:true
 }));
