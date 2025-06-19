@@ -32,13 +32,12 @@ const register = async (req,res)=>{
         const user = new userModel({name,email,password:hashPassword});
         await user.save();
         const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"})
-        res.cookie('token', token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000
-    });
-
+        res.cookie('token',token,{
+            httpOnly:true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === "production",
+            sameSite:process.env.NODE_ENV === "production" ? "none" : "strict"
+        })
         // sending welcome email 
 
         const emailOptions = {
@@ -89,12 +88,12 @@ const login = async (req,res)=>{
         }
 
         const token =   jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"7d"})
-        res.cookie('token', token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 7 * 24 * 60 * 60 * 1000
-    });
+        res.cookie('token',token,{
+            httpOnly:true,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+            secure: process.env.NODE_ENV === "production",
+            sameSite:process.env.NODE_ENV === "production" ? "None" : "Lax"
+        })
         return res.json({success:true})
         
     } catch (error) {
@@ -112,8 +111,8 @@ const logout = async (req,res)=>{
     try {
         res.clearCookie("token",{
             httpOnly:true,
-            secure: true,
-            sameSite:"none"
+            secure: process.env.NODE_ENV === "production",
+            sameSite:process.env.NODE_ENV === "production" ? "none" : "strict"
         })
         return res.json({
             success:true,
