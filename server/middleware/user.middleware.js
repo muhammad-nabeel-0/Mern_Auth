@@ -15,7 +15,7 @@ export const userDataAuth = async (req, res, next) => {
         console.log(demo)
 
     if (tokenDecode.id) {
-      req.body.userId = tokenDecode.id; // ✅ Don't use req.body
+      req.user = { id: tokenDecode.id }; // ✅ Don't use req.body
       next();
     } else {
       return res.status(401).json({ success: false, message: "API error" });
