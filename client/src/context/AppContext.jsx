@@ -14,7 +14,7 @@ const AppContext = createContext()
 export const AppContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
-    const backendUrl = "http://localhost:4000,"
+    const backendUrl = "http://localhost:4000,https://mernauth-backend.up.railway.app"
     const [isLogin, setIsLogin] = useState(false)
     const [userData, setUserData] = useState(false)
     const navigate = useNavigate()
