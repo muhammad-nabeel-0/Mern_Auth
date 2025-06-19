@@ -9,7 +9,7 @@ export const userAuth = async (req,res,next)=>{
         return res
         .status(401)
         .json({
-            success:true,
+            success:false,
             message:"Not Authirzed. Login Again"
         })
     }
@@ -19,7 +19,7 @@ export const userAuth = async (req,res,next)=>{
         
 
         if (tokenDecode.id) {
-            req.body.userId = tokenDecode.id
+            req.userId = tokenDecode.id;
             
         } else{
             return res
