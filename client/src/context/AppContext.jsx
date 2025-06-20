@@ -15,6 +15,7 @@ export const AppContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     const backendUrl = "https://mernauth-backend.up.railway.app"
+    // const backendUrl = "http://localhost:4000"
     const [isLogin, setIsLogin] = useState(false)
     const [userData, setUserData] = useState(false)
     const navigate = useNavigate()
@@ -49,33 +50,6 @@ export const AppContextProvider = ({ children }) => {
         }
     };
 
-    const sendVerificationOtp = async () => {
-        try {
-            axios.defaults.withCredentials = true
-            const { data } = await axios.post(backendUrl + "/api/auth/send-verify-otp")
-            if (data.success) {
-                navigate("/email-verify")
-                toast.success(data.message)
-            } else {
-                toast.error(data.message)
-            }
-        } catch (error) {
-            toast.error(error.message)
-
-        }
-    }
-    const verifyEmail = async () => {
-        try {
-            const { data } = await axios.post(backendUrl + "/api/auth/verify-account", {
-                withCredentials: true
-            })
-
-        } catch (error) {
-            toast.error(error.message)
-
-        }
-
-    }
 
     useEffect(() => {
         getAuthState();

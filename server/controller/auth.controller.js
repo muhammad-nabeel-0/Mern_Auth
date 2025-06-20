@@ -129,7 +129,9 @@ const logout = async (req,res)=>{
 
 const sendVerifyOtp = async (req, res) => {
     try {
-        const { userId } = req.body; 
+    const userId = req.user.id;
+    // console.log(userId);
+    
 
         if (!userId) {
             return res.status(400).json({
@@ -183,7 +185,10 @@ const sendVerifyOtp = async (req, res) => {
 };
 
 const verifyEmail = async (req,res)=>{
-    const {userId,otp} = req.body
+    const {otp} = req.body
+    const userId = req.user.id
+    // console.log(userId,otp);
+    
 
     if (!userId || !otp ) {
         return res
@@ -230,7 +235,7 @@ const verifyEmail = async (req,res)=>{
         catch (error) {
             return res
         .status(401)
-        .json({success:false,message:error.message})
+        .json({success:false,message:"email not verify"})
         }
 
 }
@@ -258,7 +263,7 @@ const sendResetOtp = async (req,res)=>{
     }
     try {
         const user = await userModel.findOne({email})
-        console.log(user);
+        // console.log(user);
         
         if (!user) {
             return res.status(401).json({
