@@ -3,7 +3,7 @@ import { assets } from '../assets/assets.js'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useAppContext } from '../context/AppContext'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const navigate = useNavigate()

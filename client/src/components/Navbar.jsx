@@ -3,7 +3,7 @@ import { assets } from '../assets/assets.js'
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast';
 import { useState } from 'react'
 
 const Navbar = () => {
