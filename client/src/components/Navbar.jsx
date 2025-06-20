@@ -48,7 +48,7 @@ const Navbar = () => {
             {userData ?
                 <div className='h-8 w-8 rounded-full flex items-center justify-center bg-black text-white relative group'>
                     {userData.name[0].toUpperCase()}
-                    <div className='absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-10'>
+                    <div className='absolute hidden group-active:block sm:group-hover:block top-0 right-0 z-10 text-black rounded pt-10'>
                         <ul className='list-none m-0 bg-gray-100 text-sm p-2 rounded'>
                             {!userData.isAccountVerified &&
                                 <li onClick={sendVerificationOtp} className='py-1 px-2 hover:bg-gray-200 cursor-pointer'>Verify Email</li>}
