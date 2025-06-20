@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { useState } from 'react'
 
 const Navbar = () => {
     const navigate = useNavigate()
+    const [toggle, setToggle] = useState(false)
     const { backendUrl, userData, setUserData, setIsLogin } = useAppContext()
     const logout = async () => {
         try {
@@ -46,9 +48,9 @@ const Navbar = () => {
         <div className='w-full flex items-center justify-between p-4 sm:p-6 sm:px-24 absolute top-0'>
             <img src={assets.logo} alt="logo" className='w-28 sm:w-32' />
             {userData ?
-                <div className='h-8 w-8 rounded-full flex items-center justify-center bg-black text-white relative group'>
+                <div onClick={() => setToggle(!toggle)} className='h-8 w-8 rounded-full flex items-center justify-center bg-black text-white relative group'>
                     {userData.name[0].toUpperCase()}
-                    <div className='absolute hidden group-active:block sm:group-hover:block top-0 right-0 z-10 text-black rounded pt-10'>
+                    <div className={`absolute ${toggle ? "block" : "hidden"} sm:hidden  sm:group-hover:block top-0 right-0 z-10 text-black rounded pt-10`}>
                         <ul className='list-none m-0 bg-gray-100 text-sm p-2 rounded'>
                             {!userData.isAccountVerified &&
                                 <li onClick={sendVerificationOtp} className='py-1 px-2 hover:bg-gray-200 cursor-pointer'>Verify Email</li>}
